@@ -13,6 +13,11 @@ logging.info(f"creating project by name {project_name}")
 list_files = [
     ".github/workflows/.gitkeep",
     ".github/workflows/main.yaml",
+    "config/config.yaml",
+    "config/schema.yaml",
+    "config/model.yaml",
+    "predictions/batch_prediction.py",
+    "predictions/instance_prediction.py",
     f"{project_name}/__init__.py",
     f"{project_name}/components/__init__.py",
     f"{project_name}/components/data_ingestion.py",
