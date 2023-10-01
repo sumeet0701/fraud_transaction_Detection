@@ -1,0 +1,64 @@
+grid_search:
+  class: GridSearchCV
+  module: sklearn.model_selection
+  params:
+    cv: 5
+    verbose: 2
+model_selection:
+  module_0:
+    class: LogisticRegression
+    module: sklearn.linear_model
+    params:
+      fit_intercept: true
+      penalty : l2
+    search_param_grid:
+      C:
+      - 0.1
+      - 1
+      - 10
+      - 30
+      - 100
+  module_1:
+    class: KNeighborsClassifier
+    module: sklearn.neighbors
+    params:
+      n_neighbors: 5
+      algorithm : kd_tree
+    search_param_grid:
+      weights:
+      - uniform
+      - distance
+  module_2:
+    class: RandomForestClassifier
+    module: sklearn.ensemble
+    params:
+      n_estimators: 10
+      max_depth: 5
+      min_samples_split: 5
+    search_param_grid:
+      criterion:
+      - gini
+      - entropy
+      - log_loss
+      max_features:
+      - sqrt
+      - log2
+  module_3:
+    class: DecisionTreeClassifier
+    module: sklearn.tree
+    params:
+      max_depth: 12
+    search_param_grid:
+      criterion:
+      - gini
+      - entropy
+      - log_loss
+      max_features:
+      - sqrt
+      - log2
+      - auto
+      splitter:
+      - best
+      - random
+
+
