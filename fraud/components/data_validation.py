@@ -4,11 +4,13 @@ from fraud.entity.config_entity import DataValidationConfig,DataIngestionConfig
 from fraud.entity.artifact_entity import DataIngestionArtifact,DataValidationArtifact
 import os,sys
 import pandas  as pd
-from fraud.util.util import read_yaml_file
+from fraud.utils.utils import read_yaml_file
+
 from evidently.model_profile import Profile
 from evidently.model_profile.sections import DataDriftProfileSection
 from evidently.dashboard import Dashboard
 from evidently.dashboard.tabs import DataDriftTab
+
 import json
 from sklearn.model_selection import StratifiedShuffleSplit
 

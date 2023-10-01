@@ -1,11 +1,11 @@
-from fraud.config.Configuration import Configuartion
+from fraud.config.Configuration import Configuration 
 from fraud.logger import logging
 from fraud.exception import FraudException
 
 from collections import namedtuple
 from datetime import datetime
 import uuid
-from fraud.config.Configuration import Configuartion
+from fraud.config.Configuration import Configuration
 from fraud.logger import logging
 
 from threading import Thread
@@ -37,12 +37,12 @@ Experiment = namedtuple("Experiment", ["experiment_id", "initialization_timestam
 
 
 class Pipeline(Thread):
-    config = Configuartion()
+    config = Configuration()
     experiment: Experiment = Experiment(*([None] * 11))
     experiment_file_path = os.path.join(config.training_pipeline_config.artifact_dir,
                                         EXPERIMENT_DIR_NAME, EXPERIMENT_FILE_NAME)
 
-    def __init__(self,config: Configuartion = Configuartion()) -> None:
+    def __init__(self,config: Configuration = Configuration()) -> None:
         try:
             os.makedirs(config.training_pipeline_config.artifact_dir, exist_ok=True)
             super().__init__(daemon=False, name="pipeline")
