@@ -1,11 +1,16 @@
 numpy
 pandas
-sklearn
+scikit-learn
+Flask
 flask
+ipykernel
+matplotlib
+seaborn
 flask-cors
 gunicorn
 PyYAML
 dill
+imblearn
 pymongo[srv]
 dnspython
 xgboost
