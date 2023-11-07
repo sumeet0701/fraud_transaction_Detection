@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Batch Prediction</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .stylish-button {
+      background-color: #39FF14.;
+      color: black;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stylish-button::before {
+      content: "";
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 255, 0, 0.5);
+      transform: translateY(0);
+      transition: transform 0.3s ease-out;
+    }
+
+    .stylish-button:hover::before {
+      transform: translateY(100%);
+    }
+
+    .stylish-button::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.2);
+      transform: translateX(0);
+      transition: transform 0.3s ease-out;
+    }
+
+    .stylish-button:hover::after {
+      transform: translateX(100%);
+    }
+
+    .animate-pulse {
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.5;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    body {
+        background-color: grey;
+    }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="flex max-w-[1500px] w-[100%] justify-center m-auto h-[100vh]" name="batch-prediction">
+    <!-- Logos -->
+    <img src="https://successanalytics.in/logo.ab81d45e.png" alt="Logo" class="fixed top-0 left-0 w-[50px] opacity-0 hover:opacity-100" name="batch-prediction" />
+    <img src="https://successanalytics.in/logo.ab81d45e.png" alt="Logo" class="fixed bottom-0 left-0 w-[50px] opacity-0 hover:opacity-100" name="batch-prediction" />
+    <img src="https://successanalytics.in/logo.ab81d45e.png" alt="Logo" class="fixed top-0 right-0 w-[50px] opacity-0 hover:opacity-100" name="batch-prediction" />
+    <img src="https://successanalytics.in/logo.ab81d45e.png" alt="Logo" class="fixed bottom-0 right-0 w-[50px] opacity-0 hover:opacity-100" name="batch-prediction" />
+    <!-- Logos -->
+
+    <!-- Batch Prediction Section Starts -->
+    <div class="flex h-[100vh] items-center w-full">
+      <div class="w-full">
+        <img src="https://static-00.iconduck.com/assets.00/csv-icon-1791x2048-ot22nr8i.png" alt="Image" class="w-64 mx-auto mb-4" 
+        width=400 height=400/>
+        <h1 class="text-center my-[50px] font-bold text-3xl text-gray-800">
+          Upload CSV File for Batch Prediction
+        </h1>
+        <div class="bg-gay-600 p7 rounded w-9/12 mx-auto">
+          <form x-data="dataFileDnD()" action="/batch" method="post" enctype="multipart/form-data" class="relative flex flex-col p-4 text-gray-400 border border-gray-200 rounded">
+            <div x-ref="dnd" class="relative flex flex-col text-gray-400 border border-gray-200 border-dashed rounded cursor-pointer">
+              <input accept=".csv" type="file" name="csv_file" class="absolute inset-0 z-50 w-full h-full p-0 m-0 outline-none opacity-0 cursor-pointer" @change="addFiles($event)" @dragover="$refs.dnd.classList.add('border-blue-400'); $refs.dnd.classList.add('ring-4'); $refs.dnd.classList.add('ring-inset');" @dragleave="$refs.dnd.classList.remove('border-blue-400'); $refs.dnd.classList.remove('ring-4'); $refs.dnd.classList.remove('ring-inset');" @drop="$refs.dnd.classList.remove('border-blue-400'); $refs.dnd.classList.remove('ring-4'); $refs.dnd.classList.remove('ring-inset');" title="" />
+              <div class="flex flex-col items-center justify-center py-10 text-center">
+                <svg class="w-6 h-6 mr-1 text-gray-400 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M3.707 6.293a1 1 0 010-1.414L9.586.707a2 2 0 012.828 0l4.586 4.586a1 1 0 01-1.414 1.414L11 3.414V15a2 2 0 01-2 2H5a2 2 0 01-2-2V3.414L3.707 6.293z" clip-rule="evenodd" />
+                  <path fill-rule="evenodd" d="M2 18a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2h-1V3a3 3 0 00-3-3H8a3 3 0 00-3 3v2H4a2 2 0 00-2 2v9zM8 4a1 1 0 011-1h2a1 1 0 011 1v2H8V4zm3 6a1 1 0 00-2 0v5a1 1 0 102 0v-5z" clip-rule="evenodd" />
+                </svg>
+                <p class="text-lg leading-tight">
+                  <span x-show="!files.length" x-text="mainText()" class="font-semibold"></span>
+                  <span x-show="files.length" class="font-semibold" x-text="secondText()"></span>
+                </p>
+                <p class="text-xs leading-tight text-gray-500" x-text="extraText()"></p>
+              </div>
+            </div>
+
+            <!-- File Previews -->
+            <template x-if="files.length">
+              <div class="grid grid-cols-1 gap-4 mt-4 md:grid-cols-2">
+                <template x-for="(file, index) in files" :key="index">
+                  <div class="relative p-2 overflow-hidden bg-white border rounded">
+                    <button type="button" class="absolute top-0 right-0 p-1 text-gray-600 transition-colors duration-200 hover:bg-gray-200 hover:text-gray-800 rounded-md" @click="removeFile(index)">
+                      <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L10 8.586 7.707 6.293a1 1 0 00-1.414 1.414L8.586 10l-2.293 2.293a1 1 0 101.414 1.414L10 11.414l2.293 2.293a1 1 0 001.414-1.414L11.414 10l2.293-2.293a1 1 0 000-1.414z" clip-rule="evenodd" />
+                      </svg>
+                    </button>
+                    <div class="flex items-center px-2">
+                      <svg class="w-8 h-8 mr-2 text-gray-400 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 2a8 8 0 100 16A8 8 0 0010 2zm1.707 5.293a1 1 0 010 1.414L9.414 13H11a1 1 0 010 2H9a1 1 0 01-1-1V9a1 1 0 012 0v1.586l3.293-3.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                      </svg>
+                      <p class="text-sm leading-tight truncate" x-text="file.name"></p>
+                    </div>
+                  </div>
+                </template>
+              </div>
+            </template>
+            <!-- File Previews -->
+
+            <button type="submit" class="btn btn-success mt-4 btn-lg btn-block stylish-button">Submit</button>
+          </form>
+          <p class="text-center text-green-600 mt-2 animate-pulse">
+            {% if message %}
+              <span class="text-2xl font-bold">{{ message }}</span> <!-- Message -->
+            {% endif %}
+            {% if prediction_result %}
+              <span class="text-lg">{{ prediction_result }}</span> <!-- Prediction Result -->
+            {% endif %}
+          </p>
+          </div>
+          </div>
+          <!-- Batch Prediction Section Ends -->
+          </div>
+    </body>
+</html>
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Footer</title>
+    <style>
+      body {
+        margin: 0;
+      }
+
+      footer {
+        width: 100%;
+        background-color: #1f1f1f;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3px 20px;
+        gap: 10px;
+        position: fixed;
+        bottom: 0;
+        margin: 0;
+      }
+
+      footer img {
+        width: 40px;
+        opacity: 0;
+      }
+
+      footer img:hover {
+        width: 40px;
+        opacity: 1;
+      }
+
+      footer p {
+        font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+          "Lucida Sans", Arial, sans-serif;
+        color: aliceblue;
+        opacity: 0;
+      }
+
+      footer p:hover {
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <footer>
+      <img src="https://successanalytics.in/logo.ab81d45e.png" alt="Logo" />
+      <p>Success Analytics</p>
+    </footer>
+  </body>
+</html>
