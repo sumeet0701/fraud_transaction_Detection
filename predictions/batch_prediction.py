@@ -29,7 +29,7 @@ class Batch_prediction:
          
 
         except Exception as e:
-            raise BankingException(e,sys) from e
+            raise FraudException(e,sys) from e
 
     
 
@@ -65,7 +65,7 @@ class Batch_prediction:
             return preprocessing
 
         except Exception as e:
-            raise BankingException(e,sys) from e   
+            raise FraudException(e,sys) from e   
 
 
     def data_transformation(self):
@@ -122,7 +122,7 @@ class Batch_prediction:
 
             return transformed_train_file_path
         except Exception as e:
-            raise BankingException(e,sys) from e
+            raise FraudException(e,sys) from e
 
 
 
